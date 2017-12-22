@@ -69,8 +69,7 @@
                 <div class="form-group">
                   <h4>Attachments</h4>
                   <!-- temporary upload html -->
-                  <div class="flag-upload form-control c-form" onclick="hitfile()">drag or upload project here</div>
-                  <input type="file" name="job_files[]" id="job_files" multiple="" style="display: none;">
+                  <div class="flag-upload form-control c-form">drag or upload project here</div>
                   <small>You may attach up to 5 files under 100mb</small>
                 </div>
 
@@ -331,9 +330,4 @@
       <br>
     </div>
 </form>
-<script type="text/javascript">
-  function hitfile() {
-    document.getElementById('job_files').click();
-  }
-</script>
 @endsection

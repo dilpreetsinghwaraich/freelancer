@@ -61,10 +61,3 @@ Route::group(['middleware' => ['freelancer_auth']], function () {
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('jobs/{id}/bidding', 'JobController@jobbidding');
 Route::get('proposal/{id}/submit', 'JobController@proposal');
-
-//Clear Cache facade value:
-Route::get('/cache', function() {
-    $exitCode = Artisan::call('cache:clear');
-    $exitCode = Artisan::call('view:clear');
-    $exitCode = Artisan::call('config:cache');
-});

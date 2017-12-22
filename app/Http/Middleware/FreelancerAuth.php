@@ -16,8 +16,7 @@ class FreelancerAuth
      */
     public function handle($request, Closure $next)
     {
-        if (!empty(Session::get('login_id')) && (Session::get('user_type') == 'freelancer')) 
-        {
+         if (!empty(Session::get('login_id')) && (Session::get('user_type') == 'freelancer')) {
             return $next($request);
         }
         return redirect('login');
