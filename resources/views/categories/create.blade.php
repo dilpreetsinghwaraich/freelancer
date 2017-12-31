@@ -23,7 +23,7 @@
                           <select name="parent_id" id="parent_id">
                           <option value="0">--Select Parent--</option>
                             @foreach($all_categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->category_id }}">{{ $category->name }}</option>
                             @endforeach
                           </select>
 

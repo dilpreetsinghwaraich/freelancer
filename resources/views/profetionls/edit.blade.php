@@ -16,10 +16,10 @@
                     <div class="login-section register-section">
                     <div class="login-page">
                       <div class="form">
-                      <form class="login-form" method="POST" action="{{ url('/profetionls') }}/{{ $profetionls->id }}">
+                      <form class="login-form" method="POST" action="{{ url('/profetionls') }}/{{ $profetionls->profetional_id }}">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
-                      <h2>Create Category</h2>
+                        <h2>Create Category</h2>
                           <input type="text" id="name" name="name" value="{{ $profetionls->name }}" placeholder="Proferionl Name"/>
 
                           <select name="category_id" id="category_id">
@@ -29,10 +29,10 @@
                               
                              
                             <option 
-                                 @if($cat->id == $profetionls->category_id)
+                                 @if($cat->category_id == $profetionls->profetional_id)
                                 selected="selected"
                               @endif
-                              value="{{ $cat->id }}">{{ $cat->name }}
+                              value="{{ $cat->category_id }}">{{ $cat->name }}
                               </option>
                             @endforeach
                           </select>

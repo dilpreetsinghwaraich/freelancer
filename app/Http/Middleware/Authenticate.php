@@ -18,7 +18,7 @@ class Authenticate {
      * @return mixed
      */
     public function handle($request, Closure $next) {
-        if (!empty(Session::get('login_id')) && (Session::get('user_type') == 'admin')) {
+        if (!empty(Session::get('login_id')) && (Session::get('user_role') == 'admin')) {
             return $next($request);
         }
         return redirect('login');

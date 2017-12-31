@@ -47,7 +47,7 @@ class ProfetionalSkills extends Controller
     {
         $selected = '';
         $all_categories = DB::table('categories')->where('parent_id', 0)->get();
-        $profetionls = DB::table('profetionls')->where('id', $id)->get()->first();
+        $profetionls = DB::table('profetionls')->where('profetional_id', $id)->get()->first();
         return view("profetionls.edit", compact(['all_categories', 'profetionls', 'selected']));
     }
 
@@ -62,7 +62,7 @@ class ProfetionalSkills extends Controller
 
        
         DB::table('profetionls')
-            ->where('id', $id)
+            ->where('profetional_id', $id)
             ->update($category);
 
         return redirect('/profetionls');
@@ -71,7 +71,7 @@ class ProfetionalSkills extends Controller
     
     public function destroy($id)
     {
-        DB::table('profetionls')->where('id', $id)->delete();
+        DB::table('profetionls')->where('profetional_id', $id)->delete();
         return redirect(url("/profetionls"));
     }
 }

@@ -8,26 +8,50 @@ use App\Job;
 use App\Proposal;
 use Carbon\Carbon;
 use App\Category;
-use Session;
-
+use Session, DB;
+use App\Http\Controllers\HelperController as helper;
 class JobController extends Controller
 {
-    //
+    public function jobpost_type(Request $request)
+    {
+        if($request->input('job_id'))
+        {
+            return Redirect('/jobpost/'.$request->input('job_type').'/'.$request->input('job_id'));
+        }
+        return Redirect('/jobpost/'.$request->input('job_type'));
+    }
 
-    public function jobpost(){
+    public function jobpost($job_type='',$job_id=''){
 
-        $categories = Category::all();
-        //return $categories;
-        //print_r($categories);die();
-
-    	return view('jobs.jobpost', compact('categories'));
+        $categories = DB::table('categories')->select('category_id','name')->get()->toArray();
+        $user_id = Session::get('login_id');
+        $jobs = \DB::table('jobs')->select('job_id','job_title')->where('user_id', $user_id)->select('*')->get()->toArray();
+        if($job_type=='new-job')
+        {
+            return view('jobs.jobpost_new', compact(['categories','jobs','job_type']));
+        }
+        elseif($job_type=='re-usejobe')
+        {
+            $job = \DB::table('jobs')->where('job_id', $job_id)->where('user_id', $user_id)->get()->first();
+            if(empty($job))
+            {
+                return view('jobs.jobpost_new', compact(['categories','jobs','job_type']));
+            }
+            $job->job_skills = (!empty($job->job_skills)?helper::maybe_unserialize($job->job_skills):$job->job_skills);
+            $job_questions = helper::maybe_unserialize($job->job_questions);
+            return view('jobs.jobpost_reuse', compact('job', 'jobs', 'categories', 'job_questions', 'job_type'));
+        }else
+        {
+            return view('jobs.jobpost_type', compact(['categories','jobs']));
+        }
+    	
     }
 
     public function createJob(Request $request){
     	$data = $request->all();
 
-        if($request->id > 0){
-            $job = Job::find($request->id);
+        if($request->job_id > 0){
+            $job = Job::find($request->job_id);
         }else{
             $job = new Job;
 
@@ -38,16 +62,16 @@ class JobController extends Controller
     	
     	$job->job_type = $request->job_type;
         $job->job_title = $request->job_title;
-        $job->category = $request->category;
+        $job->category_id = $request->category_id;
     	$job->budget = $request->budget;
     	$job->job_description = $request->job_description;
     	$job->project_type = $request->project_type;
     	$job->fl_number = $request->fl_number;
-    	$job->job_skills = $request->job_skills;
+    	$job->job_skills = helper::maybe_serialize($request->job_skills);
     	$job->experience_level = $request->experience_level;
     	$job->job_duration = $request->job_duration;
     	$job->job_time = $request->job_time;
-    	$job->job_questions = serialize($request->job_questions);
+    	$job->job_questions = helper::maybe_serialize($request->job_questions);
         
     	$job->job_cover_letter = !empty($request->job_cover_letter) ? $request->job_cover_letter : 0;
 
@@ -59,40 +83,37 @@ class JobController extends Controller
 
     	return redirect('/joblist');
     }
-
-
-
-public function createproposal(Request $request){
-        $data = $request->all();
-
-        $user_id = Session::get('login_id');
-            $proposal = new Proposal;
-
+	public function update_job(Request $request)
+	{
+		$job = [];
+        $job['job_title'] = $request->input('job_title');
+        $job['category_id'] = $request->input('category_id');
+    	$job['budget'] = $request->input('budget');
+    	$job['job_description'] = $request->input('job_description');
+    	$job['project_type'] = $request->input('project_type');
+    	$job['fl_number'] = $request->input('fl_number');
+    	$job['job_skills'] = helper::maybe_serialize($request->input('job_skills'));
+    	$job['experience_level'] = $request->input('experience_level');
+    	$job['job_duration'] = $request->input('job_duration');
+    	$job['job_time'] = $request->input('job_time');
+    	$job['job_questions'] = serialize($request->input('job_questions'));
         
-        
-        
-        $proposal->job_id = $request->job_id;
-        $proposal->bid_amount = $request->bid_amount;
-        $proposal->pay_amount = $request->pay_amount;
-        $proposal->cover_letter = $request->cover_letter;
-        $proposal->question_ans  = serialize($request->question_ans);
-        $proposal->duration = $request->duration;
-        $proposal->user_id = $user_id;
-        $proposal->attachment_file = !empty($request->attachment_file) ? $request->attachment_file : 0 ;
+    	$job['job_cover_letter'] = !empty($request->input('job_cover_letter')) ? $request->input('job_cover_letter') : 0;
 
-        $proposal->save();
+        $job['job_boost'] = !empty($request->input('job_boost')) ? $request->input('job_boost') : 0 ;
 
-        return redirect('/joblist');
-    }
-
+    	$job['status'] = !empty($request->input('status')) ? $request->input('status') : 0 ;
+		$job_id = $request->input('job_id');
+		DB::table('jobs')->where('job_id',$job_id)->update($job);
+		return redirect('/joblist');
+	}
 
     public function editjobpost($id){
-        $jobs = \DB::table('jobs')->where('id', $id)->get()->first();
+        $jobs = \DB::table('jobs')->where('job_id', $id)->get()->first();
+        $jobs->job_skills = (!empty($jobs->job_skills)?helper::maybe_unserialize($jobs->job_skills):$jobs->job_skills);
         $categories = Category::all();
 
-        $job_questions = unserialize($jobs->job_questions);
-
-        //print_r($job_questions);die();
+        $job_questions = helper::maybe_unserialize($jobs->job_questions);
         
         return view('jobs.edit_job', compact('jobs', 'categories', 'job_questions'));
     }
@@ -110,17 +131,5 @@ public function createproposal(Request $request){
 
     	return view('jobs.job_listing', compact('jobs'));
     }
-
-    public function jobbidding($id){
-        $jobs = \DB::table('jobs')->where('id', $id)->get()->first();
-        return view("jobs.job_bidding", compact('jobs'));
-    }
-
-    public function proposal($id){
-        $jobs = \DB::table('jobs')->where('id', $id)->get()->first();
-
-       $job_questions = unserialize($jobs->job_questions);
-
-        return view('jobs.submit_proposal', compact('jobs', 'job_questions'));
-    }
+    
 }

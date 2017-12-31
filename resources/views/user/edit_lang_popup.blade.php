@@ -6,7 +6,7 @@
           <h4 class="modal-title">Add Language</h4>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->id }}">
+            <form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->user_id }}">
             {{ csrf_field() }}
             <div class="forms">	
 		          <p>

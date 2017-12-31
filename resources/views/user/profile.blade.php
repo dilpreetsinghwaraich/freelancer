@@ -11,7 +11,10 @@
     <div class="freelancer_info">
       <div class="col-md-8 col-sm-8 col-lg-8">
         <div class="profile_pic">
-          <img src="{{ asset('images/profile-pic.png') }}" alt="profile-pic">
+          <img src="<?php if(isset($profile_data->profile_image)){ echo asset($profile_data->profile_image); }else { echo asset('images/profile-pic.png'); } ?>" alt="profile-pic" id="display_profile_image">
+          <input type="file" name="profile_image" id="profile_image" style="display: none;">
+          <input type="hidden" id="profile_update_url" value="<?php echo url('/profileupdateImage/'); ?>">
+          <a href="javascript:void(0);" class="upload_profile_image">Change Image</a>
         </div>
         <div class="freelancer_name">
           <h2>{{ $user_data->name }} {{ $user_data->last_name }}</h2>
@@ -29,8 +32,8 @@
             @include('user.job_title')
           </div>
 
-          <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Usa, california - 10:12pm local time</p>
-          <p><i class="fa fa-clock-o" aria-hidden="true"></i> $5.00 /hr</p>
+          <p> <i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo (isset($profile_data->city)?$profile_data->city:'').', '.(isset($profile_data->country)?$profile_data->country:'') ?> - <?php echo date('h:i:a') ?> local time</p>
+          <p><i class="fa fa-clock-o" aria-hidden="true"></i> $<?= (isset($profile_data->hourly_rate)?$profile_data->hourly_rate:'') ?> /hr</p>
         </div>
 
         <div class="skills">
@@ -84,7 +87,7 @@
 </a></li>
 response time ?
 
-<form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->id }}">
+<form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->user_id }}">
           {{ csrf_field() }}
 <div class="modal fade" id="Available" role="dialog">
     <div class="modal-dialog modal-lg">

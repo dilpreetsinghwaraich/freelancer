@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use Redirect;
-
+use Illuminate\Support\Facades\Hash;
+use App\User;
 class LoginController extends Controller
 {
     /*
@@ -49,7 +50,7 @@ class LoginController extends Controller
     public function getLogout(){
         Session::put([
             'login_id' => '',
-            'user_type' => ''
+            'user_role' => ''
         ]);
         return redirect('/');
     }
@@ -57,31 +58,65 @@ class LoginController extends Controller
     public function postLogin(Request $request){
         if ($request->input('email') != '' && $request->input('password') != '') {
             $userName = $request->input('email');
-            $userPass = md5($request->input('password'));
+            $userPass = '$2y$10$sYwPSVmXDNa8hKotAlq'.md5($request->input('password'));
             
             $userdata = DB::table("users")
                     ->where('email', $userName)
                     ->where('password', $userPass)
-                    ->get()->first();
-                    
+                    ->get()->first();    
             if (sizeof($userdata) > 0) {
+                if($userdata->user_status==0 || $userdata->token!='')
+                {
+                    return Redirect('login')->withErrors(['Look like your account is not varify, Please varify your email by click on link to login']);
+                } 
                 Session::put([
-                    'login_id' => $userdata->id,
-                    'user_type' => $userdata->user_type
+                    'login_id' => $userdata->user_id,
+                    'user_role' => $userdata->user_role
                 ]);
 
-                if($userdata->user_type == 'admin'){
+                if($userdata->user_role == 'admin'){
                     return redirect('dashboard');
-                }elseif($userdata->user_type == 'client'){
-                    return redirect('cl/'.$userdata->id.'/dashboard');
-                }elseif($userdata->user_type == 'freelancer'){
-                    return redirect('profile/fl/'.$userdata->id);
+                }elseif($userdata->user_role == 'client'){
+                    return redirect('cl/dashboard');
+                }elseif($userdata->user_role == 'freelancer'){
+                    return redirect('profile');
                 }
             } else {
-                    $request->session()->flash('error_message', "&nbsp;&nbsp;Unauthorized Email ID or Password!!!");
-                    return redirect('login');
+                    return Redirect('login')->withErrors(['Unauthorized Email ID or Password!!!']);
                 }
             
+        }else
+        {
+            return Redirect('login')->withErrors(['Please enter Email ID or Password!!!']);
+        }
+    }
+    public function forget_password()
+    {
+        return view('auth.reset_password');
+    }
+    public function reset_password_forget(Request $request)
+    {
+        $result = user::reset_password($request->all());
+        return Redirect('forget/password')->withErrors([$result]);
+    }
+    public function reset_password($reset_token)
+    {
+        if(empty($reset_token))
+        {
+            return Redirect('login')->withErrors(['Inavild Or expire token']);
+        }
+        $reset_token = $reset_token;
+        return view('auth.reset_update_password',compact('reset_token'));
+    }
+    public function reset_update_password(Request $request, $reset_token)
+    {
+        $result = user::reset_update_password($request->all(),$reset_token);
+        if($result=='updated')
+        {
+            return Redirect('login')->withErrors(['Your Password has been updated please login to continue']);
+        }else
+        {
+            return Redirect('reset/password/'.$reset_token)->withErrors([$result]);
         }
     }
 }

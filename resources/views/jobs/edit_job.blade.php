@@ -2,14 +2,14 @@
 
 @section('content')
 <!-- Clientadmin dashboard section -->
-<form action="{{ url('createjob') }}" method="POST">
-  <input type="hidden" name="id" value="{{ $jobs->id }}">
+<form action="{{ url('jobpost/update') }}" method="POST">
+  <input type="hidden" name="job_id" value="{{ $jobs->job_id }}">
 	{{ csrf_field() }}
     <div class="clientdashboardarea">
       <div class="container">
         <div class="row clienttoprow">
           <div class="col-md-12 col-sm-12">
-            <h3 class="project-title">Post a Job</h3>
+            <h3 class="project-title">Edit Job</h3>
           </div>
         </div>
 
@@ -17,33 +17,8 @@
         <div class="row">
           <div class="col-md-12 col-sm-12 ">
             <div class="clientjobfeed">
-              <section class="form-section">
-                <h4><b>What type of job are you posting?</b></h4>
-                <div class="checkbox"> 
-                  <label> 
-                    <input class="c-radio" type="radio" name="job_type" value="1" required
-                    @if($jobs->job_type == 1) 
-                      checked
-                    @endif
-                    >
-                    <span class="custom-radio"></span> 
-                    I want to create a new job post 
-                  </label> 
-                </div>
-                <div class="checkbox">
-                  <label> 
-                    <input class="c-radio" type="radio" name="job_type" value="2" required
-                    @if($jobs->job_type == 2) checked @endif
-                    >
-                    <span class="custom-radio"></span> 
-                    I want to reuse a previous job post 
-                  </label> 
-                </div>
-
-                <button class="btn btn-info">Next</button>
-              </section>
-
-              <section class="form-section">
+            
+               <section class="form-section">
                 <h4 class="section-title">Describe the job</h4>
 
                 <div class="form-group">
@@ -52,16 +27,16 @@
                   value="@if(!empty($jobs->job_title)){{$jobs->job_title}}@endif"
                   />
                 </div>
-
+                
                 <div class="form-group">
-                  <select name="category" class="form-control" required>
+                  <select name="category_id" class="form-control" required style="color: #000;">
                     <option value="">Select Category</option>
                     @if(sizeof($categories) > 0)
                     @foreach($categories as $cat)
-                      <option value="{{ $cat->name }}" 
-                        @if($cat->name == $jobs->category)selected
+                      <option value="{{ $cat->category_id }}" 
+                        @if($cat->category_id == $jobs->category_id)selected
                         @endif
-                        >{{ $cat->name }}</option>
+                        > {{ $cat->name }}</option>
                     @endforeach
                     @endif
                   </select> 
@@ -140,7 +115,30 @@
 
                 <div class="form-group">
                   <h4>Enter skills needed (optional)</h4>
-                  <input name="job_skills" class="form-control c-form" type="text" placeholder="Type here" required value="@if(!empty($jobs->job_skills)){{$jobs->job_skills}}@endif" />
+                  <div class="addskillbox">
+                  <?php
+                  if(isset($jobs->job_skills) && is_array($jobs->job_skills))
+                  {
+                    $count = 0;
+                    foreach ($jobs->job_skills as $skills)
+                    {
+                    ?>
+                    <div class="addskilone">
+                      <input name="job_skills[]" class="form-control c-form" type="text" value="<?php echo $skills; ?>" placeholder="Type here" required />
+                      <?php if($count>0){ ?>  <a href="javascript:void(0);" class="remove_skil">X</a><?php } ?>
+                    </div>
+                    <?php 
+                    $count++;
+                    }
+                  }else {
+                    ?>
+                    <div class="addskilone">
+                      <input name="job_skills[]" class="form-control c-form" type="text" placeholder="Type here" required />
+                    </div>
+                    <?php
+                  } ?>
+                  </div>
+                  <button type="button" class="addnewbtn">Add New</button>
                 </div>
 
 
@@ -307,8 +305,6 @@
                   <h4>Screening Questions</h4>
                   <label>Add a few questions you'd like your candidates to answer when they applying your job.</label>
 
-                  <textarea name="job_questions" class="form-control c-form" placeholder="" required>@if(!empty($jobs->job_questions)){{$jobs->job_questions}}@endif</textarea>
-
                   <div id='TextBoxesGroup'>
                     @if(!empty($job_questions))
                       <?php $i = 1; ?>
@@ -369,6 +365,7 @@
                </section>
                  
                </section>
+               
               <div class="">
                    <input type="submit" class='btn btn-primary' value='Submit' />
                    <button type="submit" class='btn btn-info' >Save as Draft</button>

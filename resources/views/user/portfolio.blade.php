@@ -10,7 +10,7 @@
 
 <a  class="View" href="">View More</a>
 
-<form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->id }}" enctype="multipart/form-data">
+<form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->user_id }}" enctype="multipart/form-data">
   {{ csrf_field() }}
 <div class="modal fade" id="Porfolio" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -47,7 +47,7 @@
                   <option value="0"> Category</option> 
                   @if(!empty($all_category))
                     @foreach($all_category as $category)
-                      <option value="{{ $category->id }}"> {{ $category->name }}</option>
+                      <option value="{{ $category->category_id }}"> {{ $category->name }}</option>
                     @endforeach
                   @endif
                   

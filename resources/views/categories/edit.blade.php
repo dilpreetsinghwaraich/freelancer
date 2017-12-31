@@ -16,7 +16,7 @@
                     <div class="login-section register-section">
                     <div class="login-page">
                       <div class="form">
-                      <form class="login-form" method="POST" action="{{ url('/categories') }}/{{ $category->id }}">
+                      <form class="login-form" method="POST" action="{{ url('/categories') }}/{{ $category->category_id }}">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                       <h2>Create Category</h2>
@@ -29,10 +29,10 @@
                               
                              
                             <option 
-                                 @if($cat->id == $category->parent_id)
+                                 @if($cat->category_id == $category->parent_id)
                                 selected="selected"
                               @endif
-                              value="{{ $cat->id }}">{{ $cat->name }}
+                              value="{{ $cat->category_id }}">{{ $cat->name }}
                               </option>
                             @endforeach
                           </select>

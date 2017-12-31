@@ -46,7 +46,7 @@ class CategoryController extends Controller
     {
         $selected = '';
         $all_categories = DB::table('categories')->where('parent_id', 0)->get();
-        $category = DB::table('categories')->where('id', $id)->get()->first();
+        $category = DB::table('categories')->where('category_id', $id)->get()->first();
         return view("categories.edit", compact(['all_categories', 'category', 'selected']));
     }
 
@@ -61,7 +61,7 @@ class CategoryController extends Controller
 
        
         DB::table('categories')
-            ->where('id', $id)
+            ->where('category_id', $id)
             ->update($category);
 
         return redirect('/categories');
@@ -70,7 +70,7 @@ class CategoryController extends Controller
     
     public function destroy($id)
     {
-        DB::table('categories')->where('id', $id)->delete();
+        DB::table('categories')->where('category_id', $id)->delete();
         return redirect('/categories');
     }
 }

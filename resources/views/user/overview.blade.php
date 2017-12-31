@@ -6,7 +6,7 @@
 
 <div class="modal fade" id="Overview" role="dialog">
     <div class="modal-dialog modal-lg">
-    <form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->id }}">
+    <form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->user_id }}">
           {{ csrf_field() }}
       <div class="modal-content">
         <div class="modal-header">

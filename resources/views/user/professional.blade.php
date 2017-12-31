@@ -15,14 +15,14 @@
           <h4 class="modal-title">My Skills</h4>
         </div>
 
-        <form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->id }}">
+        <form method="POST" action="{{ url('/profileupdate') }}/{{ $user_data->user_id }}">
           {{ csrf_field() }}
         <div class="modal-body">
           <h4>Enter skills</h4>
           <input type="text" name="profetional_skills" id="placeSelect" 
           value="@if(!empty($profile_data)){{ $profile_data->profetional_skills }}@endif"/>
 
-          <input type="hidden" name="user_id" value="{{ $user_data->id }}">
+          <input type="hidden" name="user_id" value="{{ $user_data->user_id }}">
           <p class="Add-field">Add up to 10 skills. Reorder your skills by dragging tags to a new position. Remove skills by deleting tags.</p>
         </div>
         <div class="modal-footer">

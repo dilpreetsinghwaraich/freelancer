@@ -23,7 +23,7 @@
                           <select name="category_id" id="category_id" required>
                           <option value="">--Select Category--</option>
                             @foreach($all_categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->category_id }}">{{ $category->name }}</option>
                             @endforeach
                           </select>
 

@@ -15,10 +15,10 @@ class ProfileController extends Controller
     }
     
     
-    public function profile( $type, $username){
+    public function profile(){
         $user_id = Session::get('login_id');
 
-        $user_data = DB::table('users')->where('id', $user_id)->get()->first();
+        $user_data = DB::table('users')->where('user_id', $user_id)->get()->first();
 
         //print_r($user_data);die();
 
@@ -26,16 +26,16 @@ class ProfileController extends Controller
         $selected_skills = array();
         //$profile_data = [];   
 
-        $profile_data = DB::table('freelancer_profiles')->where('user_id', $username)->get()->first();
+        $profile_data = DB::table('user_profile')->where('user_id', $user_id)->get()->first();
 
-        $profetionl_skills = DB::table('profetionls')->select('id', 'name as text')->get();
+        $profetionl_skills = DB::table('profetionls')->select('profetional_id', 'name as text')->get();
 
         if(!empty($profile_data))
         $profetional_skills = explode(",", $profile_data->profetional_skills);
         
 
         if(!empty($profetional_skills))
-        $selected_skills = DB::table('profetionls')->whereIn('id', $profetional_skills)->get();
+        $selected_skills = DB::table('profetionls')->whereIn('profetional_id', $profetional_skills)->get();
 
         $all_languages = DB::table('user_languages')->where('user_id', $user_id)->get();
 
@@ -48,7 +48,30 @@ class ProfileController extends Controller
     	return view('user.profile', compact(['user_data', 'profile_data', 'profetionl_skills', 'selected_skills', 'all_languages', 'all_portfolio', 'all_education', 'all_category']));
     	
     }
+    public function profileupdateImage(Request $request)
+    {
+        $profile_data = array();
+        if($request->file('profile_image'))
+        {
+            $file = $request->file('profile_image');
+            $destinationPath = 'public/images/uploads/'.date('Y').'/'.date('M');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $upload_success = $file->move($destinationPath, $filename);
+            $profile_data['profile_image'] = 'public/images/uploads/'.date('Y').'/'.date('M').'/'.$filename;
+        }
+        $user_id = Session::get('login_id');
 
+        
+        $profile_data['user_id'] = $user_id;
+        $profile = DB::table('user_profile')->where('user_id', $user_id)->get()->first();
+
+        if(count($profile) == 0){
+            DB::table('user_profile')->insert($profile_data);
+        }else{
+            Db::table('user_profile')->where('user_id', $user_id)->update($profile_data);
+        }
+        echo $profile_data['profile_image'];
+    }
     public function update(Request $request, $id){
         //return $request->all();
         $profile_data = array();
@@ -58,6 +81,23 @@ class ProfileController extends Controller
         $overview = $request->input('overview');
         $availability_type = $request->input('availability_type');
         $not_available_text = $request->input('not_available_text');
+
+
+        if(!empty($request->input('country'))){
+            $profile_data['country'] = $request->input('country');
+        }
+        if(!empty($request->input('city'))){
+            $profile_data['city'] = $request->input('city');
+        }
+        if(!empty($request->input('hourly_rate'))){
+            $profile_data['hourly_rate'] = $request->input('hourly_rate');
+        }
+        if(!empty($request->input('service_fee'))){
+            $profile_data['service_fee'] = $request->input('service_fee');
+        }
+        if(!empty($request->input('will_be_paid'))){
+            $profile_data['will_be_paid'] = $request->input('will_be_paid');
+        }
 
         if(!empty($job_title)){
             $profile_data['job_title'] = $job_title;
@@ -90,15 +130,15 @@ class ProfileController extends Controller
        
         //print_r($profile_data); die();
 
-        $profile = DB::table('freelancer_profiles')->where('user_id', $id)->get()->first();
+        $profile = DB::table('user_profile')->where('user_id', $id)->get()->first();
 
         if(count($profile) == 0){
             // insert into freelancer_profiles
-            DB::table('freelancer_profiles')->insert($profile_data);
+            DB::table('user_profile')->insert($profile_data);
 
         }else{
             // update into freelancer_profiles
-            Db::table('freelancer_profiles')->where('user_id', $id)->update($profile_data);
+            Db::table('user_profile')->where('user_id', $id)->update($profile_data);
         }
 
 
@@ -114,7 +154,7 @@ class ProfileController extends Controller
             if($lang_id == 0){
                 DB::table('user_languages')->insert($lang_data);
             }else{
-                DB::table('user_languages')->where('id', $lang_id)->update($lang_data);
+                DB::table('user_languages')->where('user_id', $lang_id)->update($lang_data);
             }
         }
 
@@ -156,10 +196,7 @@ class ProfileController extends Controller
             DB::table('user_education')->insert($education);
         }
 
-
-        $type = 'fl';
-        $username = $id;
-        return redirect('profile/'.$type.'/'.$id);
+        return redirect('profile/');
     }
 
     public function updateEducation(Request $request){

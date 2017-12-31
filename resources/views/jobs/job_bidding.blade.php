@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<?php 
+
+$job_skills = (is_array($jobs->job_skills)?implode('</span><span>',$jobs->job_skills):$jobs->job_skills);
+
+?>
 	<div class="clientdashboardarea">
       <div class="container">
         <div class="row clienttoprow">
@@ -13,7 +18,7 @@
         </div>
         <div class="row project-info-bar">
           <div class="col-sm-12 job-top-info">
-            <button class="btn badge ">{{ $jobs->category }}</button> <small>Posted {{\Carbon\Carbon::createFromTimeStamp(strtotime($jobs->created_at))->diffForHumans()}}</small>
+            <button class="btn badge ">{{ $jobs->category_id }}</button> <small>Posted {{\Carbon\Carbon::createFromTimeStamp(strtotime($jobs->created_at))->diffForHumans()}}</small>
           </div>
           <div class="col-md-4 col-sm-6 job-info-col">
             <div class="pull-left">
@@ -112,7 +117,7 @@
                     <li>
                       <strong class="m-sm-right">Programming Languages Required:</strong> 
                       <div class="projecttags inline"> 
-                      	<span>{{ $jobs->job_skills }}</span>
+                      	<span><?php echo $job_skills ?></span>
                         <!--<span data-toggle="tooltip"
                               data-placement="bottom"
                               title="PHP is a general-purpose server-side scripting language originally designed for web development to produce dynamic web pages.">PHP</span>
@@ -240,12 +245,12 @@
             </div>
           </div>
           <div class="col-md-3 col-sm-12 clientrightsec">
-            <a href="{{ url('proposal') }}/{{$jobs->id}}/submit" class="btn btn-primary btn-block m-md-bottom">Submit a Proposal</a>
-            <a class="btn btn-secondary btn-block m-md-bottom">Save Job</a>
-            <!--<p>Connects to submit a proposal: 2 
+            <a href="{{ url('submit/proposal/') }}/<?php echo \Crypt::encryptString($jobs->job_id) ?>" class="btn btn-primary btn-block m-md-bottom">Submit a Proposal</a>
+            <a class="btn btn-secondary btn-block m-md-bottom save_job <?php if(isset($saved_job->status) && $saved_job->status == 1 ){ echo 'saved_job_active'; } ?>" data-ng_bind="<?php echo \Crypt::encryptString($jobs->job_id) ?>">Save Job</a>
+            <p>Connects to submit a proposal: <?php echo (isset($proposals)?$proposals:0) ?> 
               <i class="fa fa-question-circle" data-toggle="tooltip" title="" data-placement="bottom" data-original-title="This is the number of Connects required to submit a proposal for this job."></i></p>
 
-            <p>Available Connects: 70</p>-->
+            <p>Available Connects: <?php echo (isset($proposal_user)?70-$proposal_user:0) ?> </p>
             <hr/>
             <ul class="about_client">
               <li>

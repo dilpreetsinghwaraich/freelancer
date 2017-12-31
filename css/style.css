@@ -1613,6 +1613,7 @@ a.view-more {
     position: absolute;
     top: 0px;
     right: 0px;
+    z-index: 99999;
 }
 .add-on {
     position: relative;
@@ -2621,3 +2622,62 @@ ul.lang b {
     margin-top: 12px;
 }
 /*mahdi*/
+
+.drop_downmenu
+{
+	display:none;
+	position: absolute;
+    left: 0px;
+    top: 68px;
+    width: 300px;
+    background: white;
+    list-style: none;
+    z-index: 99999999;
+}
+.login_submenu:hover .drop_downmenu
+{
+	display:block;
+}
+.addskilone {
+    position: relative;
+    margin-bottom: 10px;
+        max-width: 650px;
+}
+a.remove_skil {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    font-size: 19px;
+    background: #337ab7;
+    color: #fff;
+    padding: 12px;
+}
+.profile_pic .upload_profile_image{display: none; float: left;}
+.profile_pic:hover .upload_profile_image{display: block;}
+#site_loader {
+    position: fixed;
+    background: #ffffffd9;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    display: none;
+}
+#site_loader img {
+    width: 100px;
+    height: 100px;
+    margin: 0px auto;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 100px;
+    bottom: 0px;
+}
+.saved_job_active
+{
+    color: #fff  !important;
+    background-color: #701f1f  !important;
+    border-color: #701f1f  !important;
+}
+.error{display: none;color: red; float: left;}

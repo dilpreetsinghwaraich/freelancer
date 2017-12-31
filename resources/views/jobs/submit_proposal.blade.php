@@ -9,21 +9,24 @@
           <div class="col-md-12 col-sm-12">
             <h3 class="project-title">Submit a Propsal</h3>
           </div>
+          @if($errors->any())
+            <h4 style="color: red;">{{$errors->first()}}</h4>
+          @endif
         </div>
 
         <div class="clearfix"></div>
         <div class="row">
           <div class="col-md-12 col-sm-12 ">
             <div class="panel panel-default">
-              <div class="panel-heading">Panel heading without title</div>
+              <div class="panel-heading"><h4>{{ $jobs->job_title }}</h4></div>
               <div class="panel-body">
                 <div class="row">
                   <div class="col-md-9 bordered-right">
-                    <input value='{{ $jobs->id }}' type="hidden"  name="job_id" class="form-control c-form has-form-message  text-right" >
-                    <h4>{{ $jobs->job_title }}</h4>
+                    <input value='{{ $jobs->job_id }}' type="hidden"  name="job_id" class="form-control c-form has-form-message  text-right" >
+                    
                     <p>{{ $jobs->job_description }}<br/>
                       <a target="_blank" 
-                      href="{{ url('jobs') }}/{{ $jobs->id }}/bidding">View Job Post</a></p>
+                      href="{{ url('/job/proposal/') }}/<?php echo \Crypt::encryptString($jobs->job_id) ?>">View Job Post</a></p>
                   </div>
                   <div class="col-md-3">
                     <ul class="project-specs">

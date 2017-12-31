@@ -43,7 +43,7 @@
                 <tbody>
                 	@foreach($jobs as $job)
                   <tr>
-                    <th><a href="{{ url('jobpost') }}/{{$job->id}}/edit"> {{ $job->job_title }}</a></th>
+                    <th><a href="{{ url('jobpost') }}/{{$job->job_id}}/edit"> {{ $job->job_title }}</a></th>
                     <td>
                       @if($job->status == 1)
                         <span class="label label-success">Open</span>

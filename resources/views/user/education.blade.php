@@ -12,7 +12,7 @@
         @endforeach
       @endif
     </ul>
-  <form action="{{ url('/profileupdate') }}/{{ $user_data->id }}" method="POST">
+  <form action="{{ url('/profileupdate') }}/{{ $user_data->user_id }}" method="POST">
     {{ csrf_field() }}
     <div class="modal fade" id="Education" role="dialog">
         <div class="modal-dialog modal-lg">

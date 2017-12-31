@@ -26,10 +26,10 @@
 
 						@foreach($all_categories as $cat)
 							<tr>
-								<td><a href="{{ url('/categories')}}/{{ $cat->id }}/edit">{{ $cat->name }}</a></td>
+								<td><a href="{{ url('/categories')}}/{{ $cat->category_id }}/edit">{{ $cat->name }}</a></td>
 								<td>{{ $cat->description }}</td>
 								<td>
-								<form method="POST" action="{{ url('/categories')}}/{{ $cat->id }}">
+								<form method="POST" action="{{ url('/categories')}}/{{ $cat->category_id }}">
 
 									{{ csrf_field() }}
 									{{ method_field('DELETE') }}
