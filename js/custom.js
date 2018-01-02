@@ -280,4 +280,8 @@ jQuery(document).ready(function($) {
 		});
 		
 	});
+	$(document).on('click', '.click_event', function(event) {
+		event.preventDefault();
+		$('#attachments').click();
+	});
 });

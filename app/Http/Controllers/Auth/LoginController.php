@@ -77,7 +77,7 @@ class LoginController extends Controller
                 if($userdata->user_role == 'admin'){
                     return redirect('dashboard');
                 }elseif($userdata->user_role == 'client'){
-                    return redirect('cl/dashboard');
+                    return redirect('/joblist');
                 }elseif($userdata->user_role == 'freelancer'){
                     return redirect('profile');
                 }

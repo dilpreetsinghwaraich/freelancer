@@ -51,7 +51,7 @@ Route::group(['middleware' => ['client_auth']], function () {
 	Route::post('/save/freelancer','ClientController@save_freelancer');
 
 	Route::post('/select/type','JobController@jobpost_type');
-    Route::get('jobpost/{job_type?}/{job_id?}', 'JobController@jobpost');
+    Route::get('create/jobpost/{job_type?}/{job_id?}', 'JobController@jobpost');
     Route::get('jobpost/{id}/edit', 'JobController@editjobpost');
 	Route::post('jobpost/update','JobController@update_job');
     Route::post('createjob', 'JobController@createJob');

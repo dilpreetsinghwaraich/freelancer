@@ -59,7 +59,6 @@ class JobController extends Controller
             $job->user_id = $user_id;
         }
     	
-    	
     	$job->job_type = $request->job_type;
         $job->job_title = $request->job_title;
         $job->category_id = $request->category_id;
@@ -72,7 +71,10 @@ class JobController extends Controller
     	$job->job_duration = $request->job_duration;
     	$job->job_time = $request->job_time;
     	$job->job_questions = helper::maybe_serialize($request->job_questions);
-        
+        if($request->file('attachments'))
+        {
+            $job->attachments = helper::maybe_serialize(self::fileupload($request));
+        }        
     	$job->job_cover_letter = !empty($request->job_cover_letter) ? $request->job_cover_letter : 0;
 
         $job->job_boost = !empty($request->job_boost) ? $request->job_boost : 0 ;
@@ -96,13 +98,19 @@ class JobController extends Controller
     	$job['experience_level'] = $request->input('experience_level');
     	$job['job_duration'] = $request->input('job_duration');
     	$job['job_time'] = $request->input('job_time');
-    	$job['job_questions'] = serialize($request->input('job_questions'));
+    	$job['job_questions'] = helper::maybe_serialize($request->input('job_questions'));
+        
+        if($request->file('attachments'))
+        {
+            $job['attachments'] = helper::maybe_serialize(self::fileupload($request));
+        }
         
     	$job['job_cover_letter'] = !empty($request->input('job_cover_letter')) ? $request->input('job_cover_letter') : 0;
 
         $job['job_boost'] = !empty($request->input('job_boost')) ? $request->input('job_boost') : 0 ;
 
     	$job['status'] = !empty($request->input('status')) ? $request->input('status') : 0 ;
+
 		$job_id = $request->input('job_id');
 		DB::table('jobs')->where('job_id',$job_id)->update($job);
 		return redirect('/joblist');
@@ -131,5 +139,17 @@ class JobController extends Controller
 
     	return view('jobs.job_listing', compact('jobs'));
     }
+    public function fileupload($request){
+
+       $files = $request->file('attachments');
+          $uploaded_file = array();
+          foreach($files as $file) {
+                    $destinationPath = 'public/images/uploads/'.date('Y').'/'.date('M');
+                    $filename = str_replace(array(' ','-','`',','),'_',time().'_'.$file->getClientOriginalName());
+                    $upload_success = $file->move($destinationPath, $filename);
+                    $uploaded_file[] = 'public/images/uploads/'.date('Y').'/'.date('M').'/'.$filename;
+          }
+          return $uploaded_file;
+   }
     
 }

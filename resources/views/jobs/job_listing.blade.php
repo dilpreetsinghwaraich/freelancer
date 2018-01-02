@@ -12,7 +12,7 @@
             <h3 class="project-title">Job Postings</h3>
           </div>
           <div class="col-md-3 col-sm-12 text-right">
-            <a href="{{ url('jobpost') }}" class='btn btn-primary'>Post a job</a>
+            <a href="{{ url('create/jobpost') }}" class='btn btn-primary'>Post a job</a>
           </div>
         </div>
         <div class="row">

@@ -16,7 +16,7 @@
       <div class="col-md-12 col-sm-12 ">
         <div class="clientjobfeed">         
           
-          <form action="{{ url('createjob') }}" method="POST">
+          <form action="{{ url('createjob') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" value="1" name="job_type" />
            {{ csrf_field() }}
             <div class="rusejobe">
@@ -51,8 +51,10 @@
                 <div class="form-group">
                   <h4>Attachments</h4>
                   <!-- temporary upload html -->
-                  <div class="flag-upload form-control c-form">drag or upload project here</div>
-                  <small>You may attach up to 5 files under 100mb</small> </div>
+                  <div class="flag-upload form-control c-form click_event">drag or upload project here</div>
+                  <small>You may attach up to 5 files under 100mb</small> 
+                  <input type="file" id="attachments" multiple="" name="attachments[]" style="display: none;">
+                </div>
                 <div class="form-group">
                   <h4>What type of project do you have?</h4>
                   <div class="checkbox">

@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Clientadmin dashboard section -->
-<form action="{{ url('jobpost/update') }}" method="POST">
+<form action="{{ url('jobpost/update') }}" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="job_id" value="{{ $jobs->job_id }}">
 	{{ csrf_field() }}
     <div class="clientdashboardarea">
@@ -56,8 +56,9 @@
                 <div class="form-group">
                   <h4>Attachments</h4>
                   <!-- temporary upload html -->
-                  <div class="flag-upload form-control c-form">drag or upload project here</div>
-                  <small>You may attach up to 5 files under 100mb</small>
+                  <div class="flag-upload form-control c-form click_event">drag or upload project here</div>
+                  <small>You may attach up to 5 files under 100mb</small> 
+                  <input type="file" id="attachments" multiple="" name="attachments[]" style="display: none;">
                 </div>
 
                 <div class="form-group">

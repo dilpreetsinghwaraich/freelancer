@@ -36,7 +36,7 @@
       <ul class="drop_downmenu">
       <li> <a href="" class="smoothScroll">My Jobs</a> </li>
       <li> <a href="<?php echo url('joblist') ?>" class="smoothScroll">JOB LIST </a> </li>
-      <li> <a href="<?php echo url('jobpost') ?>" class="smoothScroll">POST JOB </a> </li>
+      <li> <a href="<?php echo url('create/jobpost') ?>" class="smoothScroll">POST JOB </a> </li>
        </ul>
             </li>
             <li class="login login_submenu"> <a href="#" class="smoothScroll">Freelancer </a> 
