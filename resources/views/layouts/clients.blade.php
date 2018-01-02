@@ -62,81 +62,7 @@ http://www.tooplate.com/view/2080-minimax
 <!-- footer section -->
 <footer>
   <div class="container">
-    <div class="row">
-      <div class="footer-scor">
-        <div class="col-md-4 col-sm-4 col-lg-4">
-          <h2>25,360,777 <br>
-            <small>REGISTERED USERS</small></h2>
-        </div>
-        <div class="col-md-4 col-sm-4 col-lg-4">
-          <h2>12,461,761 <br>
-            <small>TOTAL JOBS POSTED </small></h2>
-        </div>
-        <div class="col-md-4 col-sm-4 col-lg-4"> </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2 col-sm-2">
-        <h2>Network</h2>
-        <ul>
-          <li><a href="#">Browse Categories </a></li>
-          <li><a href="#">Browse Projects</a></li>
-          <li><a href="#">Browse Contests</a></li>
-          <li><a href="#">Browse Freelancers</a></li>
-          <li><a href="#">Browse Freelancers</a></li>
-          <li><a href="#">Sitemap</a></li>
-          <li><a href="#">Freelancer Local</a></li>
-          <li><a href="#">Showcase</a></li>
-          <li><a href="#">Escrow</a></li>
-          <li><a href="#">Warrior Forum</a></li>
-        </ul>
-      </div>
-      <div class="col-md-2 col-sm-2">
-        <h2>About </h2>
-        <ul class="social-icons0">
-          <li><a href="#">About us</a></li>
-          <li><a href="#">How it Works</a></li>
-          <li><a href="#">Team</a></li>
-          <li><a href="#">Mobile App</a></li>
-          <li><a href="#">Desktop App</a></li>
-          <li><a href="#">Security</a></li>
-          <li><a href="#">Fees & Charges</a></li>
-          <li><a href="#">Investor</a></li>
-          <li><a href="#">Quotes</a></li>
-        </ul>
-      </div>
-      <div class="col-md-2 col-sm-2">
-        <h2>Press</h2>
-        <ul class="social-icons0">
-          <li><a href="#">In the News</a></li>
-          <li><a href="#">Press Releases</a></li>
-          <li><a href="#">Awards</a></li>
-          <li><a href="#">Testimonials</a></li>
-          <li><a href="#">Timeline</a></li>
-        </ul>
-      </div>
-      <div class="col-md-2 col-sm-2">
-        <h2>Get in Touch </h2>
-        <ul class="social-icons1">
-          <li><a href="#">Get Support</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Community</a></li>
-          <li><a href="#">Affiliate Program</a></li>
-          <li><a href="#">Merchandise</a></li>
-          <li><a href="#">Help Translate</a></li>
-          <li><a href="#">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="col-md-4 col-sm-4">
-        <h2>Freelancer</h2>
-        <ul class="social-icons2">
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms and Conditions</a></li>
-          <li><a href="#">Copyright Infringement Policy </a></li>
-          <li><a href="#">Code of Conduct</a></li>
-        </ul>
-      </div>
-    </div>
+       
     <div class="row">
       <div class="container">
         <div class="col-md-8 col-sm-8 lg-8 translatored">
@@ -155,21 +81,7 @@ http://www.tooplate.com/view/2080-minimax
     <div class="row">
       <div class="container">
         <ul class="last-contry">
-          <li><a href="#">US (International)</a></li>
-          <li><a href="#">Australia</a></li>
-          <li><a href="#">United Kingdom</a></li>
-          <li><a href="#">Spain</a></li>
-          <li><a href="#">Japan</a></li>
-          <li><a href="#">Germany</a></li>
-          <li><a href="#">Brazil</a></li>
-          <li><a href="#">France</a></li>
-          <li><a href="#">Canada</a></li>
-          <li><a href="#">China</a></li>
-          <li><a href="#">Hong Kong</a></li>
-          <li><a href="#">Indonesia</a></li>
-          <li><a href="#">Philippines</a></li>
-          <li><a href="#">Pakistan</a></li>
-          <li><a href="#">Mexico</a></li>
+          <li><a href="#">South Arabia</a></li>
         </ul>
       </div>
     </div>
