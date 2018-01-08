@@ -46,6 +46,28 @@ http://www.tooplate.com/view/2080-minimax
       </div>
       <div class=" col-md-3 col-sm-3 col-lg-3 text-right">
         <ul class="social">
+        
+       <!--  <li id="notification_li" >
+
+               <a class="dropdown-toggle" href="#" id="notificationLink"  >
+                <span class="fa fa-bell-o"></span>
+                <span id="noti_Counter" class="notification-bubble" beg="false" >0</span>
+               </a>
+
+              <div id="notificationContainer">
+              <div id="notificationTitle">Notifications</div>
+              <div id="notificationsBody" class="notifications">
+                <ul class="mini_notifications_list_wrapper" style="list-style: none;padding: 12px 0;">
+                </ul>
+                <div id="noti-loader" style="text-align: center; margin-top: 75px;"> 
+                 <img src="{{ asset('images/notification.gif')}}" height="120px" width="120px">
+                </div>
+                  <div class="clearfix" style="clear:both;"></div>
+              </div>
+              <div id="notificationFooter"><a href="{{ url('notifications') }}">See All</a></div>
+              </div>
+          </li> -->
+
           <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
           <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
           <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
@@ -112,6 +134,7 @@ http://www.tooplate.com/view/2080-minimax
 <script src="{{ asset('js/isotope.js') }}"></script> 
 <script src="{{ asset('js/imagesloaded.min.js') }}"></script> 
 <script src="{{ asset('js/custom.js') }}"></script> 
+<script src="{{ asset('js/notification.js') }}"></script>
 <script src="http://cdn.jsdelivr.net/select2/3.4.8/select2.js"></script> 
 <script src="{{ asset('js/script.js') }}"></script> 
 <script>

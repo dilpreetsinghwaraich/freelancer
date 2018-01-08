@@ -16,6 +16,7 @@ class ClientAuth
      */
     public function handle($request, Closure $next)
     {
+
         if (!empty(Session::get('login_id')) && ((Session::get('user_role') == 'client') || (Session::get('user_role') == 'admin'))) {
             return $next($request);
         }

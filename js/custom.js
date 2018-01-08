@@ -284,4 +284,5 @@ jQuery(document).ready(function($) {
 		event.preventDefault();
 		$('#attachments').click();
 	});
+
 });

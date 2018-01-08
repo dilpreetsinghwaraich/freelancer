@@ -87,6 +87,8 @@ class JobController extends Controller
     }
 	public function update_job(Request $request)
 	{
+
+        $user_id =  Session::get('login_id');
 		$job = [];
         $job['job_title'] = $request->input('job_title');
         $job['category_id'] = $request->input('category_id');
@@ -112,7 +114,16 @@ class JobController extends Controller
     	$job['status'] = !empty($request->input('status')) ? $request->input('status') : 0 ;
 
 		$job_id = $request->input('job_id');
-		DB::table('jobs')->where('job_id',$job_id)->update($job);
+
+        DB::table('jobs')->where('job_id',$job_id)->update($job);
+        $message = 'You have Succefully edit your job "'.$job['job_title'] .'"' ; 
+		DB::table('notifications')->insert([
+                                            'notification_type' => 'invite',
+                                            'sender_id' => $user_id,
+                                            'receiver_id' => $user_id ,
+                                            'message' => $message,
+                                            ]);
+
 		return redirect('/joblist');
 	}
 

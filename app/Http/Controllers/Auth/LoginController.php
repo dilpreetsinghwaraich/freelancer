@@ -40,6 +40,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware('guest')->except('logout');
     }
 
@@ -56,6 +57,8 @@ class LoginController extends Controller
     }
 
     public function postLogin(Request $request){
+
+
         if ($request->input('email') != '' && $request->input('password') != '') {
             $userName = $request->input('email');
             $userPass = '$2y$10$sYwPSVmXDNa8hKotAlq'.md5($request->input('password'));

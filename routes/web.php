@@ -56,9 +56,21 @@ Route::group(['middleware' => ['client_auth']], function () {
 	Route::post('jobpost/update','JobController@update_job');
     Route::post('createjob', 'JobController@createJob');
     Route::get('joblist', 'JobController@joblisting');
-    
     Route::resource('portfolios', 'PortfolioController');
+
+    /* ------ Notification Routes ----- */
+   Route::resource('notifications','NotificationsController');
+   Route::get('get_notifications', 'NotificationsController@get_notifications');
+   Route::get('get_New_notifications', 'NotificationsController@get_New_notifications');
+   Route::post('notifications/load-more', 'NotificationsController@load_more');
+   Route::get('latest_notifications','NotificationsController@get_latest_notifications');
+
 });
+
+
+
+
+
 
 Route::group(['middleware' => ['freelancer_auth']], function () {
 	Route::get('profile', 'ProfileController@profile')->name('profile');   
@@ -82,6 +94,7 @@ Route::group(['middleware' => ['freelancer_auth']], function () {
 
     Route::get('my/job', 'ProposalsController@my_completed_job');
     Route::get('my/contract', 'ProposalsController@my_contract_job');
+
 });
 
 
